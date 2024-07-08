@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  stock:
+    container_name: postgres_stock
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: stock
+    ports:
+      - "5432:5432"
+    networks:
+      - back-tier
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=ricardo.josy@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=123
+    ports:
+      - "5050:80"
+    networks:
+      - back-tier
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+networks:
+  front-tier: {}
+  back-tier: {}
