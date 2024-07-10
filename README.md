@@ -9,5 +9,5 @@ The Postgres user db is 'postgres', the password is 123 and the database name is
 
 # Initialization
 At the first time you run the application the user 'admin' with password '123' will be create with the ADMIN role.
-All anothers users create by the application will be BASIC role.
+All anothers users create by the application will have BASIC role.
 
