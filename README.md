@@ -1,5 +1,6 @@
 # stock
 Registration of products and users to demonstrate applied knowledge in Angular, Java, Spring, Rest, Docker, RabbitMQ, SQL and some more.
+This project is the backend of the stock-webapp angular application with location here https://github.com/ricardojosy/stock-webapp
 
 # Begin
 Access folder named local and run docker compose to up 3 containers with DB Postgres, RabbitMQ and pgAdmin.
