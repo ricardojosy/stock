@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,5 +66,13 @@ public class ProductService {
 
 	public void deleteProductByController(Long id) {
 		repository.deleteById(id);
+	}
+
+	public List<Product> getProductsByNameStartWith(String productName) {
+		return repository.findByProductNameStartingWithIgnoreCase(productName);
+	}
+
+	public List<Product> getAll() {
+		return repository.findAllByOrderByProductName();
 	}
 }

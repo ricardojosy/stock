@@ -13,8 +13,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "https://528f-2804-229c-8200-22da-aa51-5f99-917a-d62c.ngrok-free.app/"})
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
@@ -23,11 +25,20 @@ public class ProductController {
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('SCOPE_BASIC') || hasAuthority('SCOPE_ADMIN')" )
-	public ResponseEntity<Page<Product>> listProducts(Pageable pageable) throws InterruptedException {
-		System.out.println("pageNumber >>>>>> "+ pageable.getPageNumber());
-		System.out.println("pageSize >>>>>> "+ pageable.getPageSize());
-
+	public ResponseEntity<Page<Product>> pageOfProducts(Pageable pageable) throws InterruptedException {
 		return new ResponseEntity<>(productService.getPageOfProducts(pageable), HttpStatus.OK);
+	}
+
+	@GetMapping("/listOrdered")
+	@PreAuthorize("hasAuthority('SCOPE_BASIC') || hasAuthority('SCOPE_ADMIN')" )
+	public ResponseEntity<List<Product>> listProducts() throws InterruptedException {
+		return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{productName}/nameStartimg")
+	@PreAuthorize("hasAuthority('SCOPE_BASIC') || hasAuthority('SCOPE_ADMIN')" )
+	public ResponseEntity<List<Product>> listProductsStaringWith(@PathVariable("productName") String productName) throws InterruptedException {
+		return new ResponseEntity<>(productService.getProductsByNameStartWith(productName), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
