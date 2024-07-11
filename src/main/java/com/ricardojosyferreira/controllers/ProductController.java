@@ -35,7 +35,7 @@ public class ProductController {
 		return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/{productName}/nameStartimg")
+	@GetMapping("/{productName}/nameStarting")
 	@PreAuthorize("hasAuthority('SCOPE_BASIC') || hasAuthority('SCOPE_ADMIN')" )
 	public ResponseEntity<List<Product>> listProductsStaringWith(@PathVariable("productName") String productName) throws InterruptedException {
 		return new ResponseEntity<>(productService.getProductsByNameStartWith(productName), HttpStatus.OK);
