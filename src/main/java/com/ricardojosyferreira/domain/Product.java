@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +32,10 @@ public class Product {
 	private Integer quantity;
 	@CreationTimestamp
 	private Instant createAt;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "order_id")
+	private List<Item> items = new ArrayList<>();
 
 	public Product(String productName, String description, Category category, BigDecimal price, Boolean available, Integer quantity) {
 		this.productName = productName;
