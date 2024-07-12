@@ -1,5 +1,10 @@
 # stock
-Registration of products and users to demonstrate applied knowledge in Angular, Java, Spring, Rest, Docker, RabbitMQ, SQL and some more.
+Registration of products, users and Orders (under construction).
+
+The purpose of this project is to showcase my abilities and demonstrate the technologies I am proficient in.
+
+To this project were used Java 17, Spring Boot, Spring Data, Spring Security 6, Postgres, Flyway, RabbitMQ, Docker, Rest, JUnit and Mockito.
+
 This project is the backend of the stock-webapp angular application with location here https://github.com/ricardojosy/stock-webapp
 
 # Begin
