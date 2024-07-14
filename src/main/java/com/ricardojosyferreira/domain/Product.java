@@ -1,5 +1,6 @@
 package com.ricardojosyferreira.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Product {
 	@CreationTimestamp
 	private Instant createAt;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private List<Item> items = new ArrayList<>();

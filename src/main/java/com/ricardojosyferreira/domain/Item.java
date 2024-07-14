@@ -1,5 +1,6 @@
 package com.ricardojosyferreira.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ricardojosyferreira.domain.dto.ItemDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,11 @@ public class Item {
 	private BigDecimal price;
 	private Integer quantity;
 	private BigDecimal total;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="product_id", nullable=false)
+	private Product product;
 
 	@CreationTimestamp
 	private Instant createAt;
