@@ -29,7 +29,7 @@ public class OrderService {
         return order.get();
     }
 
-    public List<TreeResponseDto> getOrders() {
+    public List<OrderResponseDto> getOrders() {
         List<Order> orders = repository.findAllByOrderById();
         return orders.stream().map(OrderResponseDto::getTree).toList();
     }

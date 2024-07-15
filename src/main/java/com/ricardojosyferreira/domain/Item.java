@@ -38,5 +38,6 @@ public class Item {
 		this.price = dto.price();
 		this.quantity = dto.quantity();
 		this.total = dto.total();
+		this.product.setId(dto.productId());
 	}
 }

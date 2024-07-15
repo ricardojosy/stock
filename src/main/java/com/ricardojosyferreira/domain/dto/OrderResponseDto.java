@@ -6,20 +6,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-public record OrderResponseDto(String key, BigDecimal total, Instant date) {
+public record OrderResponseDto(Long id, BigDecimal total, Instant date, List<ItemResponseDto> items) {
 
-    private static Integer index = 0;
-//        return new OrderWithNoChildrenResponseDto(order.getId().toString(), order.getTotal(), order.getCreateAt());
-
-    public static TreeResponseDto getTree(Order order) {
-        return new TreeResponseDto(new OrderResponseDto(order.getId().toString(), order.getTotal(), order.getCreateAt()), getChildren(order));
-    }
-    public static List<ItemChildDto> getChildren(Order order) {
-        index = 1;
-        return order.getItems().stream().map(item -> {
-                    String key = order.getId() + "-" + index++;
-                    return new ItemChildDto(
-                            key,
+    public static OrderResponseDto getTree(Order order) {
+        List<ItemResponseDto> itemDtos = order.getItems().stream().map(item -> {
+                    return new ItemResponseDto(
                             item.getId(),
                             item.getProduct(),
                             item.getPrice(),
@@ -27,5 +18,7 @@ public record OrderResponseDto(String key, BigDecimal total, Instant date) {
                             item.getQuantity());
                 }
         ).toList();
+
+        return new OrderResponseDto(order.getId(), order.getTotal(), order.getCreateAt(), itemDtos);
     }
 }
