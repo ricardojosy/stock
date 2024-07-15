@@ -17,3 +17,20 @@ The Postgres user db is 'postgres', the password is 123 and the database name is
 At the first time you run the application the user 'admin' with password '123' will be create with the ADMIN role.
 All anothers users create by the application will have BASIC role.
 
+# Add a product from RabbitMQ queue
+Access RabbitMQ console by url http://localhost:15672, user 'guest' and password 'guest', go to tab queue and accesse products queue,
+publish the json below as message
+
+{
+    "productName": "New product",
+    "description": "Description of new product",
+    "price": 1200,
+    "category": {
+        "id": 1,
+        "categoryName": null,
+        "parentId": null,
+        "createAt": null
+    },
+    "available": true,
+    "quantity": 1
+}
