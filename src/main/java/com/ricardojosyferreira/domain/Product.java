@@ -35,8 +35,7 @@ public class Product {
 	private Instant createAt;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "order_id")
+	@OneToMany(mappedBy="product")
 	private List<Item> items = new ArrayList<>();
 
 	public Product(String productName, String description, Category category, BigDecimal price, Boolean available, Integer quantity) {

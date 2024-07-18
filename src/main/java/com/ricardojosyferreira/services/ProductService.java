@@ -51,7 +51,7 @@ public class ProductService {
 		product.setPrice(event.price());
 		product.setAvailable(event.available());
 		product.setQuantity(event.quantity());
-		product.setCategory(new Category(event.categoryId()));
+		product.setCategory(new Category(event.category().getId()));
 		repository.save(product);
 	}
 

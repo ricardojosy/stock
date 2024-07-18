@@ -3,7 +3,7 @@ package com.ricardojosyferreira;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class QimaApplicationTests {
+class StockApplicationTests {
 
 //	@Test
 	void contextLoads() {

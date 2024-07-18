@@ -25,8 +25,7 @@ public class Order {
 	@CreationTimestamp
 	private Instant createAt;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "order_id")
+	@OneToMany(mappedBy="order")
 	private List<Item> items = new ArrayList<>();
 
 	@Override

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record OrderDto(
+        Long id,
         BigDecimal total,
         List<ItemDto> items) {
 
@@ -19,9 +20,13 @@ public record OrderDto(
     }
 
     public Order toOrder(Order order) {
-        order.setTotal(total);
-        order.setItems(getItems(items));
+        order.setTotal(getTotalOrder(items));
         return order;
+    }
+
+    private BigDecimal getTotalOrder(List<ItemDto> dtos) {
+        double x = dtos.stream().mapToDouble(item -> item.price().doubleValue()).sum();
+        return BigDecimal.valueOf(x);
     }
 
     private List<Item> getItems(List<ItemDto> dtos) {

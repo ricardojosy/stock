@@ -31,7 +31,7 @@ public class OrderService {
 
     public List<OrderResponseDto> getOrders() {
         List<Order> orders = repository.findAllByOrderById();
-        return orders.stream().map(OrderResponseDto::getTree).toList();
+        return orders.stream().map(OrderResponseDto::toDto).toList();
     }
 
     public Order createOrder(OrderDto dto) {

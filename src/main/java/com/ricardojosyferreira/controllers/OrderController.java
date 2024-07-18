@@ -1,8 +1,10 @@
 package com.ricardojosyferreira.controllers;
 
+import com.ricardojosyferreira.domain.Item;
 import com.ricardojosyferreira.domain.Order;
 import com.ricardojosyferreira.domain.dto.OrderDto;
 import com.ricardojosyferreira.domain.dto.OrderResponseDto;
+import com.ricardojosyferreira.services.ItemService;
 import com.ricardojosyferreira.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('SCOPE_BASIC') || hasAuthority('SCOPE_ADMIN')")
@@ -37,7 +41,7 @@ public class OrderController {
         if (order == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok((OrderResponseDto.getTree(order)));
+        return ResponseEntity.ok((OrderResponseDto.toDto(order)));
     }
 
     @PostMapping
@@ -53,6 +57,10 @@ public class OrderController {
         if (order == null) {
             return ResponseEntity.notFound().build();
         }
+
+        dto.items().forEach(item -> {
+            System.out.println("ITEM: " + itemService.addItem(item).toString());
+        });
         return ResponseEntity.ok(orderService.updateOrder(dto.toOrder(order)));
     }
 
@@ -64,6 +72,13 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
         orderService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/item/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<Void> deleteItem(@PathVariable("id") Long id) {
+        itemService.delete(id);
         return ResponseEntity.ok().build();
     }
 

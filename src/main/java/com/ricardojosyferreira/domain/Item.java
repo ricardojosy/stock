@@ -1,6 +1,5 @@
 package com.ricardojosyferreira.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ricardojosyferreira.domain.dto.ItemDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,29 +14,35 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="items")
+@Table(name = "items")
 public class Item {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private Long id;
 
-	private BigDecimal price;
-	private Integer quantity;
-	private BigDecimal total;
+    private BigDecimal price;
+    private Integer quantity;
+    private BigDecimal total;
 
-	@JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="product_id", nullable=false)
+    private Product product;
+
 	@ManyToOne
-	@JoinColumn(name="product_id", nullable=false)
-	private Product product;
+	@JoinColumn(name="order_id", nullable=false)
+    private Order order;
 
-	@CreationTimestamp
-	private Instant createAt;
 
-	public Item(ItemDto dto) {
-		this.price = dto.price();
-		this.quantity = dto.quantity();
-		this.total = dto.total();
-		this.product.setId(dto.productId());
-	}
+    @CreationTimestamp
+    private Instant createAt;
+
+    public Item(ItemDto dto) {
+        this.price = dto.price();
+        this.quantity = dto.quantity();
+        this.total = dto.total();
+        this.product = dto.product();
+        this.order = new Order();
+        this.order.setId(dto.orderId());
+    }
 }
