@@ -1,19 +1,16 @@
 package com.ricardojosyferreira.services;
 
 import com.ricardojosyferreira.domain.Order;
-import com.ricardojosyferreira.domain.Product;
 import com.ricardojosyferreira.domain.dto.*;
 import com.ricardojosyferreira.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -38,7 +35,8 @@ public class OrderService {
         return repository.save(dto.toOrder());
     }
 
-    public Order updateOrder(Order order) {
+    public Order updateOrder(Order order, BigDecimal totalOrder) {
+        order.setTotal(totalOrder);
         return repository.save(order);
     }
 

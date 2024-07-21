@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -50,20 +51,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(dto));
     }
 
-    @PatchMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody @Validated OrderDto dto) {
-        Order order = orderService.getOrder(id);
-        if (order == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        dto.items().forEach(item -> {
-            System.out.println("ITEM: " + itemService.addItem(item).toString());
-        });
-        return ResponseEntity.ok(orderService.updateOrder(dto.toOrder(order)));
-    }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> deleteOrder(@PathVariable("id") Long id) {
@@ -72,13 +59,6 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
         orderService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/item/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    public ResponseEntity<Void> deleteItem(@PathVariable("id") Long id) {
-        itemService.delete(id);
         return ResponseEntity.ok().build();
     }
 
